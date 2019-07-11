@@ -1,21 +1,9 @@
 var express = require("express");
+var middleware = require("./middleware");
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 300;
 
-var middleware = {
-    requireAuthentication: function (req, res, next) {
-        console.log("Özel route girildi!!!");
-        next();
-    },
-    logger: function (req, res, next) {
-        console.log(req.method + " " + req.originalUrl);
-        next();
-    }
-}
-
-app.use(middleware.logger);//tüm applerde middleware olarak çalışıır bu kullanımda
-
-
+app.use(middleware.logger);
 
 app.get("/hakkimda", middleware.requireAuthentication, function (req, res) {
     res.send("Hakkımda sayfası!!!");
